@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-# how were these dimensions decided- there are some standard dimensions and then through trial and error
+
 EMBEDDING_SIZE = 40
 N_FILTERS = 64
 WINDOW_SIZE = 10
@@ -20,30 +20,22 @@ def generate_cnn_model(n_classes, n_words):
         # EMBEDDING_SIZE].
 
         # (indices, depth,on_value, off_value)
-        # target = tf.one_hot(target, n_classes, 1, 0)  # returns a one hot tensor
-        # here target will have lot of 0 values so we perform next step for dimensionality reduction
-        # maybe feature is encoded text of the article,
-        word_vectors = tf.contrib.layers.embed_sequence(features, vocab_size=n_words, embed_dim=EMBEDDING_SIZE, scope='words') # not sure what features,vocab_size,scope mean
+        # target = tf.one_hot(target, n_classes, 1, 0) 
+        word_vectors = tf.contrib.layers.embed_sequence(features, vocab_size=n_words, embed_dim=EMBEDDING_SIZE, scope='words') 
         word_vectors = tf.expand_dims(word_vectors, 3)
 
         with tf.variable_scope('CNN_LAYER1'): # create layers
             # Apply Convolution filtering on input sequence.
-            conv1 = tf.contrib.layers.convolution2d(word_vectors, N_FILTERS, FILTER_SHAPE1, padding='VALID')
-
-            # idk why we are adding activation function before pooling
-            # Add a RELU for non linearity.
-            conv1 = tf.nn.relu(conv1)  # is adding relu as activation fn and this the same thing?- yes it is
-            pool1= tf.nn.max_pool(conv1,ksize=[1, POOLING_WINDOW, 1,1], strides=[1,POOLING_STRIDE,1,1], padding='SAME') # same means the matrix will be padded with 0
-
+            conv1 = tf.contrib.layers.convolution2d(word_vectors, N_FILTERS, FILTER_SHAPE1, padding='VALID'
+            conv1 = tf.nn.relu(conv1)  
+            pool1= tf.nn.max_pool(conv1,ksize=[1, POOLING_WINDOW, 1,1], strides=[1,POOLING_STRIDE,1,1], padding='SAME') 
             # Transpose matrix so that n_filters from convolution becomes width.
-            pool1 = tf.transpose(pool1, [0, 1, 3, 2] )  # absolutely idk what is being done here
+            pool1 = tf.transpose(pool1, [0, 1, 3, 2] )  
 
         with tf.variable_scope('CNN_LAYER2'):
-
             conv2=tf.contrib.layers.convolution2d(pool1,N_FILTERS, FILTER_SHAPE2, padding='VALID')
-
             # Max across each filter to get useful features for classification.
-            pool2 = tf.squeeze(tf.reduce_max(conv2, 1), squeeze_dims=[1]) # does max but idk why this way- cant we simply use pooling?
+            pool2 = tf.squeeze(tf.reduce_max(conv2, 1), squeeze_dims=[1]) 
             # Apply regular WX + B and classification.
             logits = tf.contrib.layers.fully_connected(pool2, n_classes, activation_fn=None)
             loss = tf.contrib.losses.softmax_cross_entropy(logits, target)
