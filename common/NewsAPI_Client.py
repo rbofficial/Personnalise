@@ -1,6 +1,6 @@
 import json
 from newsapi.newsapi_client import NewsApiClient
-newsapi = NewsApiClient(api_key='e1270e48ef7e4808bb6416aa96b85a9d')
+newsapi = NewsApiClient(api_key='XXXXX')
 NEWS_SOURCES = [
     'bbc-news',
     'bbc-sport',
@@ -17,7 +17,7 @@ NEWS_SOURCES = [
 news=[]
 def get_news():
     for source in NEWS_SOURCES:
-        articles_all = newsapi.get_everything(sources=source, language='en')  # we get a dict
+        articles_all = newsapi.get_everything(sources=source, language='en')  
         # sort by default is publihed_at
         #popularity might not give us new articles every time we implement this fn
         news.extend(articles_all['articles'])
