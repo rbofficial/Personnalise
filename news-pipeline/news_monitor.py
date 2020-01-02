@@ -6,7 +6,7 @@ import datetime
 
 SCRAPE_NEWS_TASK_QUEUE_URL= ac.CLOUDAMQP_URL
 SCRAPE_NEWS_TASK_QUEUE_NAME= "news-manager-scrape-task"
-SLEEP_TIME_IN_SECONDS= 30 # this is for the queue to sleep
+SLEEP_TIME_IN_SECONDS= 30 
 NEWS_TIME_OUT_IN_SECONDS=3600 * 24 * 3 # after 3 days, news will be removed from the redis database
 
 logger_format = '%(asctime)s - %(message)s'
@@ -29,12 +29,13 @@ def run():
             if news['title'] is None:
                 news['title'] = ""
             news_digest= hashlib.md5(news['title'].encode('utf-8')).hexdigest()
-            # idk why we are encoding to utf-8 and hexdigest() gives hexadecimal result
-            if redis_client.get(news_digest) is None: # checks whether any other news has the same title or not
+             # checks whether any other news has the same title or not
+            if redis_client.get(news_digest) is None:
                 num_of_new_news=num_of_new_news+1
-                news['digest']=news_digest # adding a field called digest to store the hash
+                # adding a field called digest to store the hash
+                news['digest']=news_digest 
 
-            # if publishe_at is absent then it might cause problems so here we will set the date and time at which it is extracted as published date
+            # if published_at is absent then it might cause problems so here we will set the date and time at which it is extracted as published date
             if news['publishedAt'] is None:
                 news['publishedAt'] = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -47,7 +48,7 @@ def run():
 if __name__ == "__main__":
     run()
 
-# it says monitor found 0 new news why is that- removed relevancy sort by and now it shows new news for the first loop
+
 
 
 
