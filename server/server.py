@@ -15,21 +15,21 @@ from watchdog.events import FileSystemEventHandler
 learn= tf.contrib.learn
 
 SERVER_HOST = 'localhost'
-SERVER_PORT = 6060  # it is for tcp-udp
-
+# it is for tcp-udp
 #PORT 6060 makes possible the transmission of a datagram message from one computer to an application running in another computer.
+SERVER_PORT = 6060  
 
-MODEL_DIR = r'C:\Users\Riya Banerjee\PycharmProjects\news-rec_demo\model' # i will have to create a package called model in this dir
-MODEL_UPDATE_LAG_IN_SECONDS = 10  # why?
+MODEL_DIR = r'...\news-rec_demo\model' 
+MODEL_UPDATE_LAG_IN_SECONDS = 10  
 
-N_CLASSES = 8 # no of topics
+N_CLASSES = 18 # no of topics
 
-VARS_FILE = r'C:\Users\Riya Banerjee\PycharmProjects\news-rec_demo\model\vars' # left
-VOCAB_PROCESSOR_SAVE_FILE = r'C:\Users\Riya Banerjee\PycharmProjects\news-rec_demo\model\vocab_procesor_save_file' # left
+VARS_FILE = r'...\news-rec_demo\model\vars' 
+VOCAB_PROCESSOR_SAVE_FILE = r'...\news-rec_demo\model\vocab_procesor_save_file' 
 
 n_words = 0 # len of vocabulary
 
-MAX_DOCUMENT_LENGTH = 500  # it was 400 back then why now 500?
+MAX_DOCUMENT_LENGTH = 500  
 vocab_processor = None
 classifier = None
 
@@ -41,10 +41,11 @@ def restoreVars():
         global n_words
         global vocab_processor
         n_words=pickle.load(f)
-        # Python pickle module is used for serializing and de-serializing a Python object structure. ...
-        # Pickling is a way to convert a python object (list, dict, etc.) into a character stream. The idea is that this character stream contains all t
-        # the information necessary to reconstruct the object in another python script.
-
+        '''
+        Python pickle module is used for serializing and de-serializing a Python object structure. ...
+        Pickling is a way to convert a python object (list, dict, etc.) into a character stream. The idea is that this character stream contains all t
+        the information necessary to reconstruct the object in another python script.
+        '''
         # print(n_words)
         vocab_processor=learn.preprocessing.VocabularyProcessor.restore(VOCAB_PROCESSOR_SAVE_FILE) #Restores vocabulary processor from given file.
         # print(vocab_processor)
