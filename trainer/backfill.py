@@ -7,7 +7,7 @@ if __name__ == '__main__':
     for news in cursor:
         count += 1
         print(count)
-        if 'class' in news: # because i dont have any class column in news db
+        if 'class' in news: 
             print('Populating classes...')
             description = news['description']
             if description is None:
