@@ -25,7 +25,7 @@ learn = tf.contrib.learn
 DATA_SET_FILE = r'C:\Users\Riya Banerjee\Desktop\News-Manager-master\News-Manager-master\news_topic_modeling_service\data\labeled_news.csv'
 REMOVE_PREVIOUS_MODEL= True
 def run():
-    if REMOVE_PREVIOUS_MODEL:  # i think its for removing previous cnn model # why tho- search why is this necessary?
+    if REMOVE_PREVIOUS_MODEL:  
         # remove old model
         print("Removing previous model...")
         shutil.rmtree(MODEL_OUTPUT_DIR)
@@ -35,7 +35,7 @@ def run():
     # Random shuffle
     df.sample(frac=1)
 
-    train_df = df[0:400]  # is this too taken randomly?
+    train_df = df[0:400]  
     # train_df[2}.dropna(inplace=True)
     test_df = df.drop(train_df.index)
     # print(train_df)
