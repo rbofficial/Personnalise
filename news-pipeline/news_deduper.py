@@ -1,6 +1,3 @@
-# just copy from the main
-#
-
 from common.cloudAMQP_client_mod import CloudAMQPClient
 import datetime
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -40,11 +37,12 @@ def handle_message(news):
     published_at_day_begin = datetime.datetime(published_at.year, published_at.month, published_at.day, 0, 0, 0, 0)
     published_at_day_end = published_at_day_begin + datetime.timedelta(days=1)
     same_day_news_list = list(db[NEWS_TABLE_NAME].find({'publishedAt': {'$gte': published_at_day_begin, '$lt': published_at_day_end}}))  # this step remains the problem
-    print(same_day_news_list) # list is always empty
+    print(same_day_news_list) 
 
     if same_day_news_list is not None and len(same_day_news_list) > 0:
-        documents = [news['text'] for news in same_day_news_list]  # this just takes the existing news['text'] into doc
-        documents.insert(0, text)  # this adds the text that came from the news in pipeline to the top of the list
+        documents = [news['text'] for news in same_day_news_list]  
+        #adds the text that came from the news in pipeline to the top of the list
+        documents.insert(0, text)  
 
         # Calculate similarity matrix
         tfidf = TfidfVectorizer().fit_transform(documents)
@@ -52,10 +50,10 @@ def handle_message(news):
 
         #logger.debug("Pairwise Sim:%s", str(pairwise_sim))
 
-        rows, _ = pairwise_sim.shape  # just putting the first output of the result in rows variable
+        rows, _ = pairwise_sim.shape  
 
         for row in range(1, rows):
-            if pairwise_sim[row, 0] > SAME_NEWS_SIMILARITY_THRESHOLD:  # why only [row,0]
+            if pairwise_sim[row, 0] > SAME_NEWS_SIMILARITY_THRESHOLD:  
                 # Duplicated news. Ignore.
                 logger.info("Duplicated news. Ignore.")
                 return
