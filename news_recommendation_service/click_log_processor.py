@@ -28,7 +28,7 @@ ALPHA = 0.1
 
 SLEEP_TIME_IN_SECONDS = 3
 
-LOG_CLICKS_TASK_QUEUE_URL = "amqp://wgdfwyqw:Iv5HoJx5d-BXCnE0ApfJDURfGxMcirZU@wasp.rmq.cloudamqp.com/wgdfwyqw"
+LOG_CLICKS_TASK_QUEUE_URL = "zzz"
 LOG_CLICKS_TASK_QUEUE_NAME = "news-manager-clicklog-queue"
 
 PREFERENCE_MODEL_TABLE_NAME = "user_preference_model"
