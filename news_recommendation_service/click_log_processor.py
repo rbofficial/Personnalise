@@ -80,7 +80,7 @@ def handle_message(msg):
     # Update the clicked one.
     click_class = news['class']
     old_p = model['preference'][click_class] # must return a number
-    model['preference'][click_class] = float((1 - ALPHA) * old_p + ALPHA) # i dont get this
+    model['preference'][click_class] = float((1 - ALPHA) * old_p + ALPHA) 
 
     # Update the non-clicked classes.
     for i, prob in model['preference'].items():
