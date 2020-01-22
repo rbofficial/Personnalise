@@ -1,2 +1,3 @@
 # Personnalise
-A Real-Time News Recommendation System that provides a customised news list to each user. Consists of a news pipeline that scrapes news from over ten sources, dedupes and stores them- using MongoDB, Redis and RabbitMQ. Uses Convolutional Neural Network (CNN) to classify the scraped news into 18 predefined categories, and a click log processor to collect user’s click logs for updating users’ preference.
+A Real-Time News Recommendation System that provides a customised news list to each user. 
+
